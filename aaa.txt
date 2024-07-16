@@ -1,0 +1,4 @@
+git config --global user.name "SuhedaTaspinar"
+git config --global user.email "suhedadilektaspinar@gmail.com"
+
+git commit -m "Exercise List"

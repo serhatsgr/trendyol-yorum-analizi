@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analiz Sonuçları</title>
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {
+            'packages': ['corechart', 'bar']
+        });
+        google.charts.setOnLoadCallback(drawCharts);
+
+        function drawCharts() {
+           //Veri alma
+            var olumluYuzde = Number("{{ olumlu }}");
+            var tarafsizYuzde = Number("{{ tarafsiz }}");
+            var olumsuzYuzde = Number("{{ olumsuz }}");
+            var olumluSayisi = Number("{{ olumlu_sayisi }}");
+            var tarafsizSayisi = Number("{{ tarafsiz_sayisi }}");
+            var olumsuzSayisi = Number("{{ olumsuz_sayisi }}");
+
+            // Pasta Grafiği
+            var pieData = google.visualization.arrayToDataTable([
+                ['Duygu', 'Yüzde'],
+                ['Olumlu', olumluYuzde],
+                ['Tarafsız', tarafsizYuzde],
+                ['Olumsuz', olumsuzYuzde]
+            ]);
+
+            var pieOptions = {
+                title: 'Yorum Duygu Dağılımı',
+                pieHole: 0.5, // Pasta grafiğinin içindeki boşluk yüzdesi (0 ile 1 arasında değer alır)
+                height: 400, // Grafiğin yüksekliği (isteğe bağlı)
+                slices: {
+                    0: { color: 'gold' }, // Olumlu
+                    1: { color: '#333333' }, // Tarafsız (siyah/graye yakın)
+                    2: { color: 'deepskyblue' } // Olumsuz
+                },
+                backgroundColor: 'black', // Grafik arka plan rengi
+                legend: {
+                    textStyle: { color: 'white' } // Efsane metin rengi
+                },
+                titleTextStyle: {
+                    color: 'white' // Başlık metin rengi
+                }
+            };
+
+            var pieChart = new google.visualization.PieChart(document.getElementById('pieChart'));
+            pieChart.draw(pieData, pieOptions);
+
+            // Çubuk Grafiği
+            var barData = google.visualization.arrayToDataTable([
+                ['Duygu', 'Sayı'],
+                ['Olumlu', olumluSayisi],
+                ['Tarafsız', tarafsizSayisi],
+                ['Olumsuz', olumsuzSayisi]
+            ]);
+
+            var barOptions = {
+                chart: {
+                    title: 'Yorum Sayıları',
+                },
+                backgroundColor: 'black', // Grafik arka plan rengi
+                legend: {
+                    textStyle: { color: 'white' } // Efsane metin rengi
+                },
+                titleTextStyle: {
+                    color: 'white' // Başlık metin rengi
+                }
+            };
+
+            var barChart = new google.charts.Bar(document.getElementById('barChart'));
+            barChart.draw(barData, google.charts.Bar.convertOptions(barOptions));
+        }
+    </script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #000; /* Siyah arka plan */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+            color: white;
+        }
+
+        .video-container {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .video-container video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+        }
+
+        .container {
+            z-index: 1;
+            margin-top: 50px;
+            background-color: rgba(0, 0, 0, 0.8); 
+            padding: 20px;
+            border-radius: 8px; 
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+            text-align: center;
+        }
+
+        .chart {
+            margin-top: 20px;
+        }
+
+        h2 {
+            font-size: 2.5rem; 
+            color: #fff; 
+        }
+
+        .btn-primary {
+            background-color: #007bff; 
+            border-color: #007bff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0069d9; 
+            border-color: #0062cc;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="video-container">
+        <video autoplay muted loop>
+            <source src="https://cdn.pixabay.com/video/2024/03/15/204306-923909642_large.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <div class="container">
+        <h2 class="mt-4 mb-4">Analiz Sonuçları</h2>
+        <div id="pieChart" class="chart"></div>
+        <div id="barChart" class="chart"></div>
+        <a href="/download?file={{ csv_filename }}" class="btn btn-primary mt-4">CSV Dosyasını İndir</a>
+    </div>
+
+   
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
