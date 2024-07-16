@@ -24,6 +24,8 @@ Neo4j Yükleme: Analiz edilen veriler, kullanıcı yorumları ve duygu durumlar�
 Web Arayüzü: Flask ile oluşturulan web arayüzü, kullanıcıların yorumları girmesine, ilerleme durumunu takip etmesine ve sonuçları görüntülemesine olanak tanır.
 
 Kullanım
+
+
 Yorumları Topla: Kullanıcılar bir URL girerek yorumları toplar.
 Duygu Analizi: Yorumlar analiz edilir ve sonuçlar Neo4j'e yüklenir.
 Sonuçları Görüntüle: Web arayüzünden duygu analizi sonuçları ve graf ilişkileri görüntülenir.
